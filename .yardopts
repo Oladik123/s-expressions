@@ -1,0 +1,3 @@
+-o doc
+--title "S-expressions"
+--exclude project/tests
