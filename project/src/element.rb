@@ -72,7 +72,7 @@ class Element
       return nil if (result.get_key == :&)
       result
     else
-      rseult
+      result
     end
   end
 
