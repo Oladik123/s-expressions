@@ -38,7 +38,6 @@ schema = Schema.new(schema1)
 puts 'Schema validation example: ', schema.validate(example1)
 
 puts '-' * 10
-
 puts parser.parse('(fruits
 			  (fruit (@ (fresh true) (weight 5))
 			    (name "apple")
