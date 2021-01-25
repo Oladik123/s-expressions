@@ -1,6 +1,7 @@
 require_relative 'parser.rb'
 require_relative 'schema.rb'
 require_relative 'search.rb'
+require_relative 'html_element.rb'
 
 parser = Parser.new
 
@@ -35,3 +36,16 @@ schema1 = parser.parse('(element (& (name fruits) (type string)))')
 
 schema = Schema.new(schema1)
 puts 'Schema validation example: ', schema.validate(example1)
+
+puts '-' * 10
+
+puts parser.parse('(fruits
+			  (fruit (@ (fresh true) (weight 5))
+			    (name "apple")
+			    (color "green")
+			  )
+			(fruit (@ (fresh false) (weight -10))
+			    (name "orange")
+			    (color "orange")
+			  )
+			)').to_html
