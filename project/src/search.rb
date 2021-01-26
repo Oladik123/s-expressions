@@ -1,6 +1,8 @@
 class Element
   @absolute
 
+  # Prints node found by query
+  # @param string search query
   def search(string)
     @absolute = string[0] == '/'[0]
     queue = []
@@ -21,30 +23,33 @@ class Element
     end
   end
 
-  def print_hash(hash, depth = 0)
-    if hash == nil
+  # Prints node pretty
+  def print_hash(node, depth = 0)
+    if node == nil
       puts '()'
       return
     end
     str_pad = ' ' * depth
-    if hash[:value] == nil
+    if node[:value] == nil
       print str_pad + '('
-      print hash[:key]
+      print node[:key]
       puts ' => '
-      if hash[:params] != nil
+      if node[:params] != nil
         puts ' ' * (depth + 2) + '(@ =>'
-        hash[:params].each { |x| print_hash(x, depth + 4) }
+        node[:params].each { |x| print_node(x, depth + 4) }
         puts ' ' * (depth + 2) + ')'
       end
-      if hash[:children] != nil
-        hash[:children].each { |x| print_hash(x, depth + 2) }
+      if node[:children] != nil
+        node[:children].each { |x| print_node(x, depth + 2) }
       end
       puts str_pad + ')'
     else
-      puts str_pad + '(' + (hash[:key] + ' => ') + hash[:value].to_s + ')'
+      puts str_pad + '(' + (node[:key] + ' => ') + node[:value].to_s + ')'
     end
   end
 
+  # @param node
+  # @return true if node matches search query
   def compare_nodes(node, esa, index = 0)
     #check if we got end of matching string
     if index >= esa.length
@@ -79,6 +84,8 @@ class Element
     end
   end
 
+  # Builds tree to search through
+  # @param parent should be nil for root element
   def make_tree(parent, element)
     params = element.get_params
     if params
@@ -104,6 +111,8 @@ class Element
     data
   end
 
+  # Splits query string to search atoms
+  # @param string search query
   def self.extract_search_atoms (string)
     string_literals = []
     string.gsub(/[\w\[=\]*"]+/) { |x| string_literals << x }
@@ -126,6 +135,8 @@ class Element
     }
   end
 
+  # Get node attributes (@)
+  # @return array of kv-attributes
   def get_params
     result = @data
     if result.kind_of?(Array)
@@ -142,6 +153,8 @@ class Element
       nil
     end
   end
+
+  private
 
   def get_children
     result = @data
@@ -174,7 +187,6 @@ class Element
     @data
   end
 
-  private
 
   def params_matched(node, esa, index)
     matched = true
