@@ -6,18 +6,18 @@ class Element
         "#{get_closing_tag(depth)}"
   end
 
-  def format_attributes_html(attributes)
+  private def format_attributes_html(attributes)
     return (attributes.length == 0 ? '' : ' ') <<
         attributes
             .map { |element| "#{element.get_key}=\"#{element.get_value}\"" }
             .join(" ")
   end
 
-  def get_closing_of_opening_tag
+  private def get_closing_of_opening_tag
     return (get_children_html.length == 0 ? '/>' : '>') << "\n"
   end
 
-  def format_children_html(children, depth)
+  private def format_children_html(children, depth)
     children.map do |child|
       result = " " * 2 * depth
       result << (child.kind_of?(Element) ? child.to_html(depth + 1) : child) << "\n"
@@ -25,11 +25,11 @@ class Element
         .join
   end
 
-  def get_closing_tag(depth)
+  private def get_closing_tag(depth)
     get_children_html.length == 0 ? '' : " " * (depth - 1) * 2 << "</#{@key.to_s}>"
   end
 
-  def get_children_html
+  private def get_children_html
     if @data.kind_of?(Array) && has_attributes_html
       return @data[1..-1]
     end
@@ -45,7 +45,7 @@ class Element
     return [@data]
   end
 
-  def get_attributes_html
+  private def get_attributes_html
     _attributes = nil
 
     unless has_attributes_html
@@ -63,7 +63,7 @@ class Element
     return _attributes.kind_of?(Element) ? [_attributes] : _attributes
   end
 
-  def has_attributes_html
+  private def has_attributes_html
     attribute_element_key = :"@"
     return @data.kind_of?(Array) && @data.length > 0 && @data.first.get_key == attribute_element_key ||
         @data.kind_of?(Element) && @data.get_key == attribute_element_key
