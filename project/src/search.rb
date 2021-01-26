@@ -154,8 +154,6 @@ class Element
     end
   end
 
-  private
-
   def get_children
     result = @data
     if result.kind_of?(Array)
@@ -169,6 +167,7 @@ class Element
       nil
     end
   end
+
 
   def get_value1
     result = @data
@@ -187,6 +186,7 @@ class Element
     @data
   end
 
+  private
 
   def params_matched(node, esa, index)
     matched = true
