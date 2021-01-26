@@ -27,7 +27,14 @@ puts '-' * 10
 
 # Search example
 puts 'Search example:'
-example1.search('/fruits/fruit/name["orange"]')
+query = '/fruits/fruit/name["orange"]'
+puts "For query #{query} found:"
+example1.search(query)
+puts "--"
+
+query = 'fruit[weight=5]/name'
+puts "For query #{query} found:"
+example1.search(query)
 puts '-' * 10
 
 # Schema example
@@ -38,6 +45,9 @@ schema = Schema.new(schema1)
 puts 'Schema validation example: ', schema.validate(example1)
 
 puts '-' * 10
+
+# Html example
+puts "Html example:"
 puts parser.parse('(fruits
 			  (fruit (@ (fresh true) (weight 5))
 			    (name "apple")
